@@ -1,0 +1,6 @@
+	<%
+	for(var key in data){%>
+		<span>Application : <%= key %>, Nombre de fois : <%= data[key] %> </span> <br>
+	<%}%>
+
+
