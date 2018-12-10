@@ -220,7 +220,7 @@ app.get('/version', async (req, res) => {
 			console.log("Apres recuperation des données");			
 			for(var i=0;i<versionsResult.length;i++){
 				 let tmp = db.collection('wsedump');
-				 versioncount[i] = await tmp.countDocuments({'data.version': versionsResult[i]});
+				 versioncount[i] = await tmp.countDocuments({'data':{'version': versionsResult[i]}});
 				console.log("well");
 
 			}
