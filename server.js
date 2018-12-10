@@ -105,14 +105,9 @@ app.get('/application', (req, res) => {
 
 		/* COUNT LABEL APPLICATION */
 		console.log("Apres recuperation des données");
-		res.render('index.ejs', {labels : labelsResult});
+		res.render('application.ejs', {labels : labelsResult});
 		console.log("well");
-		console.log("Length of datasResult : "+labelsResult.length);
-
-
-
-		
-				
+		console.log("Length of datasResult : "+labelsResult.length);				
 		return DataApplication;
 	}
 
@@ -130,59 +125,113 @@ app.get('/application', (req, res) => {
 		
 
 	}));
-
-
-
-
-
-	
-
-
-
 })
 
 
 app.get('/date', (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
-
-
-	db.collection('wsedump').distinct("data", {}, (function(err, labelsResult){
+	var sessionsResult = [];
+	db.collection('wsedump').distinct("date",{}, (function(err, DataApplication){
 		console.log(("----------------------------"));
-		console.log(("LABELS"));
+		console.log(("Date"));
 		if(err){
 		    return console.log(err);
 		}
-		if(labelsResult){
-		    console.log("Labels : "+labelsResult);
-		    labels = labelsResult;
-		    console.log("length of labels : "+labels.length);
-
-		    return labelsResult;
-		}
-		var datasResults = [];
-		console.log("Apres recuperation des données");
-		res.render('index.ejs', {labels : labelsResult, datas : datasResult});
-		console.log("well");
-	}))
+		if(DataApplication){
+		    console.log("Dates : "+DataApplication);
+		    sessionsResult = DataApplication;
+		    console.log("length of dates : "+sessionsResult.length);
+			console.log("Apres recuperation des dates");
+			res.render('date.ejs', {dates : sessionsResult});
+			console.log("well");
+			console.log("Length of datasResult : "+sessionsResult.length);			
+			return DataApplication;
+	}}))
 })
 
 
+	function getCount(key){
+		db.collection('wsedump').countDocuments({'session': key},(function(err,count){
+				if(err){
+					return console.log("erreur dans le count");
+				}
+				if(count){
+					console.log(count);	
+					return count;
+				}	
+			}))		
+	}
 
 
-
+app.get('/session', async (req, res) => {
+	console.log("Avant recuperation des données");
+	console.log("En cours");
+	var sessionsResult = [];
+	var sessioncount=[];
 	
+	await db.collection('wsedump').distinct("session", {}, (async function(err, DataApplication){
+		console.log(("----------------------------"));
+		console.log(("Session"));
+		if(err){
+		    return console.log(err);
+		}
+		if(DataApplication){
+		    console.log("Sessions : "+DataApplication);
+		    sessionsResult = DataApplication;
+		    console.log("length of sessions : "+sessionsResult.length);
+			console.log("Apres recuperation des données");			
+			for(var i=0;i<sessionsResult.length;i++){
+				 let tmp = db.collection('wsedump');
+				 sessioncount[i] = await tmp.countDocuments({'session': sessionsResult[i]});
+				/* ,(function(err,count){
+				 	if(err){
+						return console.log("erreur dans le count");
+					}
+					if(count){
+						console.log(count);	
+						sessioncount[i]=count;
+						console.log("session count "+i+" "+sessioncount[i]);	
+						return count;
+					}
+					
+				})) 
+				*/
+				console.log("well");
 
-
-
-
-
-
-app.get('/session', (req, res) => {
-
+			}
+			
+		res.render('session.ejs', {sessions : sessionsResult , nombres : sessioncount});
+				console.log("Length of datasResult : "+sessionsResult.length);		  
+		return DataApplication;
+	}}))
 })
 
-
+	/*		
+	      for(var i=0;i<sessionsResult.length;i++){
+			sessioncount = db.collection('wsedump').find({"session":sessionsResult[i]}).count();
+			console.log("le calcul est fait");
+		   if (typeof sessioncount[i] !== "undefined"   &&  sessioncount[i]  !== "undefined") {
+			console.log("nombre : " + sessioncount[i]);*/
+//JSON.parse(JSON.stringify(sessioncount))
 app.get('/version', (req, res) => {
-
+console.log("Avant recuperation des données");
+	console.log("En cours");
+	var versionssResult = [];
+	db.collection('wsedump').distinct("data.version", {}, (function(err, DataApplication){
+		console.log(("----------------------------"));
+		console.log(("Version"));
+		if(err){
+		    return console.log(err);
+		}
+		if(DataApplication){
+		    console.log("Versions : "+DataApplication);
+		    versionsResult = DataApplication;
+		    console.log("length of versions : "+versionsResult.length);
+			console.log("Apres recuperation des données");
+			res.render('version.ejs', {versions : versionsResult});
+			console.log("well");
+			console.log("Length of datasResult : "+versionsResult.length);			
+			return DataApplication;
+	}}))
 })

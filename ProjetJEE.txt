@@ -1,0 +1,17 @@
+- microservice de combat entre deux dresseurs pockemon : 2 pockemon qui s'affrontent
+- statistique de pockemon : addition de niveaux
+- quand un pokemon est mort l'autre prend sa place 
+- requete de microservices pour declencher le combat en donnant deux identifiants 
+- stocker les resultats en base de données
+- ca va durer un certain nombre de tours 
+- ressource get pour les resultats de combats
+- ecran pour dresser un combat
+(moins de 8h)
+-service REST
+-une vue
+-stockage base de données
+-une notification
+- rendu sur github 
+- demonstration mardi matin
+
+
