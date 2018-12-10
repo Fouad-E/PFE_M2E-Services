@@ -184,19 +184,6 @@ app.get('/session', async (req, res) => {
 			for(var i=0;i<sessionsResult.length;i++){
 				 let tmp = db.collection('wsedump');
 				 sessioncount[i] = await tmp.countDocuments({'session': sessionsResult[i]});
-				/* ,(function(err,count){
-				 	if(err){
-						return console.log("erreur dans le count");
-					}
-					if(count){
-						console.log(count);	
-						sessioncount[i]=count;
-						console.log("session count "+i+" "+sessioncount[i]);	
-						return count;
-					}
-					
-				})) 
-				*/
 				console.log("well");
 
 			}
@@ -214,11 +201,13 @@ app.get('/session', async (req, res) => {
 		   if (typeof sessioncount[i] !== "undefined"   &&  sessioncount[i]  !== "undefined") {
 			console.log("nombre : " + sessioncount[i]);*/
 //JSON.parse(JSON.stringify(sessioncount))
-app.get('/version', (req, res) => {
-console.log("Avant recuperation des données");
+app.get('/version', async (req, res) => {
+	console.log("Avant recuperation des données");
 	console.log("En cours");
-	var versionssResult = [];
-	db.collection('wsedump').distinct("data.version", {}, (function(err, DataApplication){
+	var versionsResult = [];
+	var versioncount=[];
+	
+	await db.collection('wsedump').distinct("data.version", {}, (async function(err, DataApplication){
 		console.log(("----------------------------"));
 		console.log(("Version"));
 		if(err){
@@ -226,12 +215,19 @@ console.log("Avant recuperation des données");
 		}
 		if(DataApplication){
 		    console.log("Versions : "+DataApplication);
-		    versionsResult = DataApplication;
+		    sversionsResult = DataApplication;
 		    console.log("length of versions : "+versionsResult.length);
-			console.log("Apres recuperation des données");
-			res.render('version.ejs', {versions : versionsResult});
-			console.log("well");
-			console.log("Length of datasResult : "+versionsResult.length);			
-			return DataApplication;
+			console.log("Apres recuperation des données");			
+			for(var i=0;i<versionsResult.length;i++){
+				 let tmp = db.collection('wsedump');
+				 versioncount[i] = await tmp.countDocuments({'data.version': versionsResult[i]});
+				console.log("well");
+
+			}
+			
+		res.render('version.ejs', {versions : versionsResult , nombres : versioncount});
+				console.log("Length of datasResult : "+versionsResult.length);		  
+		return DataApplication;
 	}}))
+
 })
