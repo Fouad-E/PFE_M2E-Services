@@ -9,13 +9,13 @@
 <body>
 
 	<%
-	for(var i=0; i<dates.length; i++){%>
-		<span> Date : <%= dates[i] %>  </span> <br>
+	for(var i=0; i<sources.length; i++){%>
+		<span> Project Source : <%= sources[i] %>  </span> <br>
 <%}%>
 
 	<%
 	for(var j=0; j<nombres.length; j++){%>
-		<span> Nombre de dates : <%= nombres[j] %>  </span> <br>
+		<span> Nombre de sources : <%= nombres[j] %>  </span> <br>
 <%}%>
 <div class="container">
    <canvas id="myChart" width="740" height="200"></canvas>
@@ -29,7 +29,7 @@
 	let massPopChart=new Chart(myChart,{	
 	     type:'doughnut',//bar , horizontalBar , pie , line , donuts
 		 data:{
-			labels:<%- JSON.stringify(dates); %>,
+			labels:<%- JSON.stringify(sources); %>,
 			datasets:[{
 					label:'Population',
 					data:[<%= nombres %>],
@@ -52,7 +52,7 @@
 		 options:{
 			title:{
 				display:true,
-				text:'Dates',
+				text:'Sources',
 				fontSize:25			
 			},
 			legend:{

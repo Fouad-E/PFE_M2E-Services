@@ -9,39 +9,77 @@
 <body>
 
 	<%
-	for(var i=0; i<labels.length; i++){%>
-		<span>Application : <%= labels[i] %> </span> <br>
-	<%}%>
+	for(var i=0; i<applications.length; i++){%>
+		<span> Applications : <%= applications[i] %>  </span> <br>
+<%}%>
+
+	<%
+	for(var j=0; j<nombres.length; j++){%>
+		<span> Nombre de applications : <%= nombres[j] %>  </span> <br>
+<%}%>
 <div class="container">
    <canvas id="myChart" width="740" height="200"></canvas>
 </div>
-
 <script>
-var data = [
-    {
-        value: 20,
-        color:"#637b85"
-    },
-    {
-        value : 30,
-        color : "#2c9c69"
-    },
-    {
-        value : 40,
-        color : "#dbba34"
-    },
-    {
-        value : 10,
-        color : "#c62f29"
-    }
- 
-];
-var canvas = document.getElementById("myChart");
-console.log("avant chart");
-var ctx = canvas.getContext("2d");
-new Chart(ctx).Doughnut(data);
-console.log("après chart");
+    let myChart=document.getElementById('myChart').getContext('2d');
+	// Global Options
+	Chart.defaults.global.defaultFontFamily='Lato';
+	Chart.defaults.global.defaultFontSize=18;
+	Chart.defaults.global.defaultFontColor='#777';
+	let massPopChart=new Chart(myChart,{	
+	     type:'doughnut',//bar , horizontalBar , pie , line , donuts
+		 data:{
+			labels:<%- JSON.stringify(applications); %>,
+			datasets:[{
+					label:'Population',
+					data:[<%= nombres %>],
+					backgroundColor:[
+						'rgba(255,99,132,0.6)',
+						'rgba(54,162,235,0.6)',
+						'rgba(255,206,86,0.6)',
+						'rgba(75,192,192,0.6)',
+						'rgba(153,102,255,0.6)',
+						'rgba(255,159,64,0.6)',
+						'rgba(255,99,132,0.6)'					
+					],
+					borderWidth:4,
+					borderColor:'#777',
+					hoverBorderWidth:3,
+					hoverBorderColor:'#000'		
+			
+			}]
+		 },
+		 options:{
+			title:{
+				display:true,
+				text:'Applications',
+				fontSize:25			
+			},
+			legend:{
+				display:false,
+				position:'right',
+				labels:{
+					fontColor:'#000'
+				}
+			
+			},
+			layout :{
+			  padding :{
+				left:50,
+				right:0,
+				bottom:0,
+				top:0			
+			}
+			},
+			tooltips:{				
+				enabled:true
+			}
+		 
+		 },
+	
+	});
 </script>
+
 </body>
 
 </html>

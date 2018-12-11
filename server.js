@@ -50,118 +50,98 @@ app.get('/', (req, res) => {
 })
 */
 
-
-app.get('/application', (req, res) => {
+app.get('/application', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
-	var labelsResult = [];
-	db.collection('wsedump').distinct("data.application", {}, (function(err, DataApplication){
+	var applicationsResult = [];
+	var applicationsCount=[];
+	
+	await db.collection('wsedump').distinct("data.application", {}, (async function(err, DataApplication){
 		console.log(("----------------------------"));
-		console.log(("LABELS"));
+		console.log(("Application"));
 		if(err){
 		    return console.log(err);
 		}
 		if(DataApplication){
-		    console.log("Labels : "+DataApplication);
-		    labelsResult = DataApplication;
-		    console.log("length of labels : "+labelsResult.length);
-
-/*	
-		console.log(("----------------------------"));
-		console.log(("COUNT"));
-		var datasResult = [];
-
-
-		function loadDatasCount(callback) {
-		  
-			for(var i=0; i<labels.length;i++){
-				console.log("label "+i+" : "+labels[i]);
-
-				db.collection('wsedump').find({'data.application':labels[i]}).count(function (err, count) {
-					if(err) {
-						return console.log(err);
-					}
-					console.log("count : "+count);
-					datasResult.push(count);
-					return count;
-				});
+		    console.log("Application : "+DataApplication);
+		    applicationsResult = DataApplication;
+		    console.log("length of sessions : "+applicationsResult.length);
+			console.log("Apres recuperation des données");			
+			for(var i=0;i<applicationsResult.length;i++){
+				 let tmp = db.collection('wsedump');
+				 applicationsCount[i] = await tmp.countDocuments({'data.application': applicationsResult[i]});
+				console.log("well");
 
 			}
 			
-			console.log("lgt : "+datasResult.length);
-			callback();
-		}
-
-		function loadPageHTML(){
-			console.log("Apres recuperation des données");
-			res.render('index.ejs', {labels : DataApplication, datas : datasResult});
-			console.log("well");
-			console.log("Length of datasResult : "+datasResult.length);		
-		}
-
-		loadDatasCount(loadPageHTML);
-*/
-
-
-		/* COUNT LABEL APPLICATION */
-		console.log("Apres recuperation des données");
-		res.render('application.ejs', {labels : labelsResult});
-		console.log("well");
-		console.log("Length of datasResult : "+labelsResult.length);				
+		res.render('session.ejs', {sessions : applicationsResult , nombres : applicationsCount});
+				console.log("Length of datasResult : "+applicationsResult.length);		  
 		return DataApplication;
-	}
-
-	console.log("x");
-	db.collection('wsedump').find({}, {"data.application" : 1, "_id" : 0}), (function(err, result){
-		console.log("y");
-		for(var i=0; i<result.length; i++){
-			console.log("1");
-		}
-	});
-		
-		/*for(var i=0; i<DataApplication.length; i++){
-			console.log(DataApplication[i].
-		}*/
-		
-
-	}));
+	}}))
 })
 
 
-app.get('/date', (req, res) => {
+
+
+app.get('/date', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
-	var sessionsResult = [];
-	db.collection('wsedump').distinct("date",{}, (function(err, DataApplication){
+	var datesResult = [];
+	var datesCount=[];
+	
+	await db.collection('wsedump').distinct("date", {}, (async function(err, DataApplication){
 		console.log(("----------------------------"));
-		console.log(("Date"));
+		console.log(("Dates"));
 		if(err){
 		    return console.log(err);
 		}
 		if(DataApplication){
 		    console.log("Dates : "+DataApplication);
-		    sessionsResult = DataApplication;
-		    console.log("length of dates : "+sessionsResult.length);
-			console.log("Apres recuperation des dates");
-			res.render('date.ejs', {dates : sessionsResult});
-			console.log("well");
-			console.log("Length of datasResult : "+sessionsResult.length);			
-			return DataApplication;
+		    datesResult = DataApplication;
+		    console.log("length of dates : "+datesResult.length);
+			console.log("Apres recuperation des données");			
+			for(var i=0;i<datesResult.length;i++){
+				 let tmp = db.collection('wsedump');
+				 datesCount[i] = await tmp.countDocuments({'date': datesResult[i]});
+				console.log("well");
+
+			}
+			
+		res.render('date.ejs', {dates : datesResult , nombres : datesCount});
+				console.log("Length of datasResult : "+datesResult.length);		  
+		return DataApplication;
 	}}))
 })
 
+app.get('/projectSession', async (req, res) => {
+	console.log("Avant recuperation des données");
+	console.log("En cours");
+	var projectSessionResult = [];
+	var projectSessionCount=[];
+	
+	await db.collection('wsedump').distinct("data.projectSession", {}, (async function(err, DataApplication){
+		console.log(("----------------------------"));
+		console.log(("Dates"));
+		if(err){
+		    return console.log(err);
+		}
+		if(DataApplication){
+		    console.log("Sessions : "+DataApplication);
+		    projectSessionResult = DataApplication;
+		    console.log("length of sessions : "+projectSessionResult.length);
+			console.log("Apres recuperation des données");			
+			for(var i=0;i<projectSessionResult.length;i++){
+				 let tmp = db.collection('wsedump');
+				 projectSessionCount[i] = await tmp.countDocuments({'data.projectSession': projectSessionResult[i]});
+				console.log("well");
 
-	function getCount(key){
-		db.collection('wsedump').countDocuments({'session': key},(function(err,count){
-				if(err){
-					return console.log("erreur dans le count");
-				}
-				if(count){
-					console.log(count);	
-					return count;
-				}	
-			}))		
-	}
+			}
+			
+		res.render('date.ejs', {projectSessions : projectSessionResult , nombres : projectSessionCount});
+				console.log("Length of datasResult : "+projectSessionResult.length);		  
+		return DataApplication;
+	}}))
+})
 
 
 app.get('/session', async (req, res) => {
@@ -194,6 +174,37 @@ app.get('/session', async (req, res) => {
 	}}))
 })
 
+app.get('/source', async (req, res) => {
+	console.log("Avant recuperation des données");
+	console.log("En cours");
+	var sourcesResult = [];
+	var sourcesCount=[];
+	 
+	await db.collection('wsedump').distinct("source", {}, (async function(err, DataApplication){
+		console.log(("----------------------------"));
+		console.log(("Source"));
+		if(err){
+		    return console.log(err);
+		}
+		if(DataApplication){
+		    console.log("Sources : "+DataApplication);
+		    sourcesResult = DataApplication;
+		    console.log("length of sources : "+sourcesResult.length);
+			console.log("Apres recuperation des données");			
+			for(var i=0;i<sourcesResult.length;i++){
+				 let tmp = db.collection('wsedump');
+				 sourcesCount[i] = await tmp.countDocuments({'source': sourcesResult[i]});
+				console.log("well");
+
+			}
+			
+		res.render('source.ejs', {sources : sourcesResult , nombres : sourcesCount});
+				console.log("Length of datasResult : "+sessionsResult.length);		  
+		return DataApplication;
+	}}))
+})
+
+
 	/*		
 	      for(var i=0;i<sessionsResult.length;i++){
 			sessioncount = db.collection('wsedump').find({"session":sessionsResult[i]}).count();
@@ -215,12 +226,12 @@ app.get('/version', async (req, res) => {
 		}
 		if(DataApplication){
 		    console.log("Versions : "+DataApplication);
-		    sversionsResult = DataApplication;
+		    versionsResult = DataApplication;
 		    console.log("length of versions : "+versionsResult.length);
 			console.log("Apres recuperation des données");			
 			for(var i=0;i<versionsResult.length;i++){
 				 let tmp = db.collection('wsedump');
-				 versioncount[i] = await tmp.countDocuments({'data':{'version': versionsResult[i]}});
+				 versioncount[i] = await tmp.countDocuments({'data.version': versionsResult[i]});
 				console.log("well");
 
 			}
