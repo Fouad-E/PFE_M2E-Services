@@ -72,8 +72,16 @@
 			},
 			tooltips:{
 				enabled:true
-			}
+			},
+			 events:["mousemove", "mouseout", "click", "touchstart", "touchmove", "touchend"],
+			 onClick:{
+				 function(evt) {
+					 var url = "http://example.com/?label="
+					 console.log(url);
+					 alert(url);
 
+				 }
+			 }
 		 },
 
 	});

@@ -1,12 +1,13 @@
+/*Bibliothèque pour utiliser le framework Express JS*/
 const express = require('express');
 const app = express();
-
+/*Bibliothèque pour utiliser la base de données MongoDB*/
 const MongoClient = require('mongodb').MongoClient;
 
 
 var db
 var res
-
+/*Pour se connecter à la base de donnée*/
 MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
   if (err) return console.log(err)
   db = client.db('wse') // whatever your database name is
@@ -15,41 +16,13 @@ MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
   })
 })
 
-/*
-app.get('/', (req, res) => {
-	  var cursor = db.collection('wsedump').find().toArray(function(err, results) {
-	  console.log("debut recuperation des données");
-	  res = results;
-	  console.log("fin recuperation des données");
-	  console.log("resultats : ");
-	  console.log(results);
-	  // send HTML file populated with quotes here
-	})
-})
-*/
-
+/*Envoyer les données vers le dossier /view qui contient les fichiers d'extension ejs*/
 console.log("avant definition render view engine");
 app.set('views', __dirname + '/view');
 app.set('view engine', 'ejs');
 
 
-/*
-app.get('/', (req, res) => {
-  console.log("Avant recuperation des données");
-  console.log("En cours");
-  db.collection('wsedump').find().toArray((err, result) => {
-    if (err) return console.log(err)
-    // renders index.ejs
-    console.log("Apres recuperation des données");
-    console.log(result[0].data.application);
-    console.log(result[0].data.projectSession);
-    console.log(result[0].data.version);
-    res.render('index.ejs', {messages: result});
-    console.log("well");
-  })
-})
-*/
-
+/*Methode GET pour récupérer la catégorie application */
 app.get('/application', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
@@ -82,7 +55,7 @@ app.get('/application', async (req, res) => {
 
 
 
-
+/*Methode GET pour récupérer la catégorie date */
 app.get('/date', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
@@ -113,6 +86,7 @@ app.get('/date', async (req, res) => {
 	}}))
 })
 
+/*Methode GET pour récupérer la catégorie projectSession */
 app.get('/projectSession', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
@@ -137,13 +111,13 @@ app.get('/projectSession', async (req, res) => {
 
 			}
 
-		res.render('date.ejs', {projectSessions : projectSessionResult , nombres : projectSessionCount});
+		res.render('projectSession.ejs', {projectSessions : projectSessionResult , nombres : projectSessionCount});
 				console.log("Length of datasResult : "+projectSessionResult.length);
 		return DataApplication;
 	}}))
 })
 
-
+/*Methode GET pour récupérer la catégorie session */
 app.get('/session', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
@@ -174,6 +148,7 @@ app.get('/session', async (req, res) => {
 	}}))
 })
 
+/*Methode GET pour récupérer la catégorie source */
 app.get('/source', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");
@@ -204,14 +179,7 @@ app.get('/source', async (req, res) => {
 	}}))
 })
 
-
-	/*
-	      for(var i=0;i<sessionsResult.length;i++){
-			sessioncount = db.collection('wsedump').find({"session":sessionsResult[i]}).count();
-			console.log("le calcul est fait");
-		   if (typeof sessioncount[i] !== "undefined"   &&  sessioncount[i]  !== "undefined") {
-			console.log("nombre : " + sessioncount[i]);*/
-//JSON.parse(JSON.stringify(sessioncount))
+/*Methode GET pour récupérer la catégorie version */
 app.get('/version', async (req, res) => {
 	console.log("Avant recuperation des données");
 	console.log("En cours");

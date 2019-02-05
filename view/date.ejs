@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+	<!-- Bibliothèques pour utiliser la bibliothèque Chart JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Optional-->
 	<meta charset="UTF-8">
@@ -103,9 +104,9 @@
 	</style>
 </head>
 <body>
-
+<!-- code Javascript pour récupérer les données passées par server.js , dans notre cas : dates et nombres -->
 	<%
-	for(var i=0; i<applications.length; i++){%>
+	for(var i=0; i<dates.length; i++){%>
 		<span> Dates : <%= dates[i] %>  </span> <br>
 <%}%>
 	<%
@@ -147,6 +148,7 @@
   <span class="dot" onclick="currentSlide(3)"></span>
 </div>
 <script>
+	//code Javascript pour créer un graphe en doughnut
     let myChart=document.getElementById('myChart').getContext('2d');
 	// Global Options
 	Chart.defaults.global.defaultFontFamily='Lato';
@@ -157,7 +159,7 @@
 		 data:{
 			labels:<%- JSON.stringify(dates); %>,
 			datasets:[{
-					label:'Population',
+					label:'Nombre',
 					data:[<%= nombres %>],
 					backgroundColor:[
 						'rgba(255,99,132,0.6)',
@@ -178,7 +180,7 @@
 		 options:{
 			title:{
 				display:true,
-				text:'Applications',
+				text:'Dates',
 				fontSize:25
 			},
 			legend:{
@@ -204,6 +206,7 @@
 		 },
 
 	});
+	//code Javascript pour créer un graphe en pie
 	let myChart1=document.getElementById('myChart1').getContext('2d');
 // Global Options
 Chart.defaults.global.defaultFontFamily='Lato';
@@ -214,7 +217,7 @@ let massPopChart1=new Chart(myChart1,{
 	 data:{
 		labels:<%- JSON.stringify(dates); %>,
 		datasets:[{
-				label:'Population',
+				label:'Nombre',
 				data:[<%= nombres %>],
 				backgroundColor:[
 					'rgba(255,99,132,0.6)',
@@ -235,7 +238,7 @@ let massPopChart1=new Chart(myChart1,{
 	 options:{
 		title:{
 			display:true,
-			text:'Applications',
+			text:'Dates',
 			fontSize:25
 		},
 		legend:{
@@ -261,6 +264,7 @@ let massPopChart1=new Chart(myChart1,{
 	 },
 
 });
+	//code Javascript pour créer un graphe en radar
 let myChart2=document.getElementById('myChart2').getContext('2d');
 // Global Options
 Chart.defaults.global.defaultFontFamily='Lato';
@@ -271,7 +275,7 @@ let massPopChart2=new Chart(myChart2,{
  data:{
 	labels:<%- JSON.stringify(dates); %>,
 	datasets:[{
-			label:'Population',
+			label:'Nombre',
 			data:[<%= nombres %>],
 			backgroundColor:[
 				'rgba(255,99,132,0.6)',
@@ -292,7 +296,7 @@ let massPopChart2=new Chart(myChart2,{
  options:{
 	title:{
 		display:true,
-		text:'Applications',
+		text:'Dates',
 		fontSize:25
 	},
 	legend:{
@@ -328,7 +332,7 @@ function plusSlides(n) {
 function currentSlide(n) {
   showSlides(slideIndex = n);
 }
-
+//méthode Javascript pour créer des slides
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
