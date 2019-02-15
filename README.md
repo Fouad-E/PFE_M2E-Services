@@ -7,10 +7,35 @@ L'équipe Carbon a réalisé un plugin pour IntelliJ et Android Studio permettan
 
 ### Les commandes :
 
+
+**Avant de lancer l'application , il faut d'abord démarrer la base de donnée MongoDB avec la commande suivante :**
+```
+mongod
+```
+OU
+```
+mongo
+```
+
 **Pour lancer l'application :**
+```
+node server.js
+```
+(en cas de modification du ficher server.js, il faudra relancer la commande)
+
+OU
+
 ```
 nodemon server.js
 ```
+(toute modification apportée dans le fichier server.js, la commande est relancé automatiquement)
+
+
+**Pour lancer la page d'accueil contenant tous les catégories :**
+```
+http://localhost:3080/
+```
+
 
 ### Pour accéder aux différentes catégories, les URL sont les suivants :
 
@@ -44,5 +69,9 @@ http://localhost:3080/version
 http://localhost:3080/projectSession
 ```
 
+**Pour accéder à la catégorie timestamp et y voir les graphes de tout type affichant chaque version avec le nombre d'utilisations de cette dernière :**
+```
+http://localhost:3080/timestamp
+```
 
 Le fichier server.js contient principalement des codes pour l'extraction des données de la base de données MongoDB à l'aide d'ExpressJS et les rediriger vers le dossier View contenant l'ensemble des vues pour chaque catégorie.

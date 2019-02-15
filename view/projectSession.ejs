@@ -5,7 +5,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Optional-->
 	<meta charset="UTF-8">
-	<title>MY APP</title>
+	<title>Projects sessionsP</title>
 	<style>
 		* {box-sizing:border-box}
 		/* Slideshow container */
@@ -92,15 +92,8 @@
 	</style>
 </head>
 <body>
-<!-- code Javascript pour récupérer les données passées par server.js , dans notre cas : projecrSessions et nombres -->
-<%
-for(var i=0; i<projectSessions.length; i++){%>
-	<span>project Session  : <%= projectSessions[i] %>  </span> <br>
-<%}%>
-<%
-for(var j=0; j<nombres.length; j++){%>
-	<span> Nombre de session : <%= nombres[j] %>  </span> <br>
-<%}%>
+
+
 <!-- Slideshow container -->
 <div class="slideshow-container">
 
@@ -135,6 +128,13 @@ for(var j=0; j<nombres.length; j++){%>
 	<span class="dot" onclick="currentSlide(2)"></span>
 	<span class="dot" onclick="currentSlide(3)"></span>
 </div>
+
+<!-- code Javascript pour récupérer les données passées par server.js , dans notre cas : projecrSessions et nombres -->
+	<%
+	for(var i=0; i<projectSessions.length; i++){%>
+		<span> Project session : <%= projectSessions[i] %>, Occurences : <%= nombres[i] %>   </span> <br>
+	<%}%>
+	
 <script>
 	//code Javascript pour créer un graphe en doughnut
 	let myChart=document.getElementById('myChart').getContext('2d');
@@ -149,15 +149,7 @@ for(var j=0; j<nombres.length; j++){%>
 			datasets:[{
 				label:'Nombre',
 				data:[<%= nombres %>],
-				backgroundColor:[
-					'rgba(255,99,132,0.6)',
-					'rgba(54,162,235,0.6)',
-					'rgba(255,206,86,0.6)',
-					'rgba(75,192,192,0.6)',
-					'rgba(153,102,255,0.6)',
-					'rgba(255,159,64,0.6)',
-					'rgba(255,99,132,0.6)'
-				],
+				backgroundColor:<%- JSON.stringify(rgbas); %>,
 				borderWidth:4,
 				borderColor:'#777',
 				hoverBorderWidth:3,
@@ -208,15 +200,7 @@ for(var j=0; j<nombres.length; j++){%>
 			datasets:[{
 				label:'Nombre',
 				data:[<%= nombres %>],
-				backgroundColor:[
-					'rgba(255,99,132,0.6)',
-					'rgba(54,162,235,0.6)',
-					'rgba(255,206,86,0.6)',
-					'rgba(75,192,192,0.6)',
-					'rgba(153,102,255,0.6)',
-					'rgba(255,159,64,0.6)',
-					'rgba(255,99,132,0.6)'
-				],
+				backgroundColor:<%- JSON.stringify(rgbas); %>,
 				borderWidth:4,
 				borderColor:'#777',
 				hoverBorderWidth:3,
@@ -262,15 +246,7 @@ for(var j=0; j<nombres.length; j++){%>
 			datasets:[{
 				label:'Nombre',
 				data:[<%= nombres %>],
-				backgroundColor:[
-					'rgba(255,99,132,0.6)',
-					'rgba(54,162,235,0.6)',
-					'rgba(255,206,86,0.6)',
-					'rgba(75,192,192,0.6)',
-					'rgba(153,102,255,0.6)',
-					'rgba(255,159,64,0.6)',
-					'rgba(255,99,132,0.6)'
-				],
+				backgroundColor:<%- JSON.stringify(rgbas); %>,
 				borderWidth:4,
 				borderColor:'#777',
 				hoverBorderWidth:3,

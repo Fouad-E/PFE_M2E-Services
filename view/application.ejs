@@ -5,7 +5,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Optional-->
 	<meta charset="UTF-8">
-	<title>MY APP</title>
+	<title>Applications</title>
 	<style>
 	* {box-sizing:border-box}
 /* Slideshow container */
@@ -92,49 +92,54 @@
 	</style>
 </head>
 <body>
-<!-- code Javascript pour récupérer les données passées par server.js , dans notre cas : applications et nombres -->
-	<%
-	for(var i=0; i<applications.length; i++){%>
-		<span> Applications : <%= applications[i] %>  </span> <br>
-<%}%>
-	<%
-	for(var j=0; j<nombres.length; j++){%>
-		<span> Nombre de applications : <%= nombres[j] %>  </span> <br>
-<%}%>
-<!-- Slideshow container -->
-<div class="slideshow-container">
 
-  <!-- Full-width images with number and caption text -->
-  <div class="mySlides fade">
-		<div class="container">
-		   <canvas id="myChart" width="740" height="200"></canvas>
-		</div>
-  </div>
 
-  <div class="mySlides fade">
-		<div class="container">
-		   <canvas id="myChart1" width="740" height="200"></canvas>
-		</div>
-  </div>
 
-  <div class="mySlides fade">
-		<div class="container">
-		   <canvas id="myChart2" width="740" height="200"></canvas>
-		</div>
-  </div>
 
-  <!-- Next and previous buttons -->
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
-<br>
 
-<!-- The dots/circles -->
-<div style="text-align:center">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
-</div>
+
+	<!-- Slideshow container -->
+	<div class="slideshow-container">
+
+	  <!-- Full-width images with number and caption text -->
+	  <div class="mySlides fade">
+			<div class="container">
+			   <canvas id="myChart" width="740" height="200"></canvas>
+			</div>
+	  </div>
+
+	  <div class="mySlides fade">
+			<div class="container">
+			   <canvas id="myChart1" width="740" height="200"></canvas>
+			</div>
+	  </div>
+
+	  <div class="mySlides fade">
+			<div class="container">
+			   <canvas id="myChart2" width="740" height="200"></canvas>
+			</div>
+	  </div>
+
+	  <!-- Next and previous buttons -->
+	  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+	  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+	</div>
+	<br>
+
+	<!-- The dots/circles -->
+	<div style="text-align:center">
+	  <span class="dot" onclick="currentSlide(1)"></span>
+	  <span class="dot" onclick="currentSlide(2)"></span>
+	  <span class="dot" onclick="currentSlide(3)"></span>
+	</div>
+
+	<!-- code Javascript pour récupérer les données passées par server.js , dans notre cas : applications et nombres -->
+		<%
+		for(var i=0; i<applications.length; i++){%>
+			<span> Application : <%= applications[i] %>, Occurences : <%= nombres[i] %>   </span> <br>
+		<%}%>
+
+
 <script>
     //code Javascript pour créer un graphe en doughnut
     let myChart=document.getElementById('myChart').getContext('2d');
@@ -149,15 +154,7 @@
 			datasets:[{
 					label:'Nombre',
 					data:[<%= nombres %>],
-					backgroundColor:[
-						'rgba(255,99,132,0.6)',
-						'rgba(54,162,235,0.6)',
-						'rgba(255,206,86,0.6)',
-						'rgba(75,192,192,0.6)',
-						'rgba(153,102,255,0.6)',
-						'rgba(255,159,64,0.6)',
-						'rgba(255,99,132,0.6)'
-					],
+					backgroundColor:<%- JSON.stringify(rgbas); %>,
 					borderWidth:4,
 					borderColor:'#777',
 					hoverBorderWidth:3,
@@ -208,15 +205,7 @@ let massPopChart1=new Chart(myChart1,{
 		datasets:[{
 				label:'Nombre',
 				data:[<%= nombres %>],
-				backgroundColor:[
-					'rgba(255,99,132,0.6)',
-					'rgba(54,162,235,0.6)',
-					'rgba(255,206,86,0.6)',
-					'rgba(75,192,192,0.6)',
-					'rgba(153,102,255,0.6)',
-					'rgba(255,159,64,0.6)',
-					'rgba(255,99,132,0.6)'
-				],
+				backgroundColor:<%- JSON.stringify(rgbas); %>,
 				borderWidth:4,
 				borderColor:'#777',
 				hoverBorderWidth:3,
@@ -262,15 +251,7 @@ let massPopChart2=new Chart(myChart2,{
 	datasets:[{
 			label:'Nombre',
 			data:[<%= nombres %>],
-			backgroundColor:[
-				'rgba(255,99,132,0.6)',
-				'rgba(54,162,235,0.6)',
-				'rgba(255,206,86,0.6)',
-				'rgba(75,192,192,0.6)',
-				'rgba(153,102,255,0.6)',
-				'rgba(255,159,64,0.6)',
-				'rgba(255,99,132,0.6)'
-			],
+			backgroundColor:<%- JSON.stringify(rgbas); %>,
 			borderWidth:4,
 			borderColor:'#777',
 			hoverBorderWidth:3,
